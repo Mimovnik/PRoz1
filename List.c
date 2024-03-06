@@ -93,7 +93,7 @@ void print(List *list, void (*f_print)(Node *))
     }
 }
 
-void delete(List *list)
+void delete_list(List *list)
 {
     Node *currentNode = list->head;
     if (currentNode == NULL)
