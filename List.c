@@ -45,18 +45,13 @@ int insert(List *list, void *data, int index)
         return 0;
     }
 
-    Node *atIndex = list->head;
-    for (int i = 0; i < index; i++)
-    {
-        atIndex = atIndex->next;
-    }
-
     if (index == 0)
     {
         printf("Inserting at the front\n");
+        list->head->previous = newNode;
+        newNode->next = list->head;
         list->head = newNode;
-        newNode->next = atIndex;
-        atIndex->previous = newNode;
+
         list->size++;
         return 0;
     }
@@ -67,15 +62,24 @@ int insert(List *list, void *data, int index)
         list->tail->next = newNode;
         newNode->previous = list->tail;
         list->tail = newNode;
+
         list->size++;
         return 0;
     }
 
+    Node *atIndex = list->head;
+    for (int i = 0; i < index; i++)
+    {
+        atIndex = atIndex->next;
+    }
+
     printf("Inserting at index: %d\n", index);
     atIndex->previous->next = newNode;
-    newNode->previous = atIndex->previous->next;
+    newNode->previous = atIndex->previous;
     atIndex->previous = newNode;
     newNode->next = atIndex;
+
+    list->size++;
     return 0;
 }
 
@@ -87,4 +91,20 @@ void print(List *list, void (*f_print)(Node *))
         f_print(currentNode);
         currentNode = currentNode->next;
     }
+}
+
+void delete(List *list)
+{
+    Node *currentNode = list->head;
+    if (currentNode == NULL)
+    {
+        return;
+    }
+    while (currentNode->next != NULL)
+    {
+        currentNode = currentNode->next;
+        free(currentNode->previous);
+    }
+    free(currentNode);
+    free(list);
 }

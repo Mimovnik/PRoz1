@@ -23,4 +23,6 @@ int insert(List *list, void *data, int index);
 
 void print(List *list, void (*f_print)(Node *));
 
+void delete(List *list);
+
 #endif

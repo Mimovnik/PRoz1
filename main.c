@@ -3,7 +3,26 @@
 
 void print_node(Node *node)
 {
-    printf("%d\n", *(int *)node->data);
+    if (node->previous != NULL)
+    {
+        printf("%d <- ", *(int *)node->previous->data);
+    }
+    else
+    {
+        printf("NULL <- ");
+    }
+
+    printf("%d", *(int *)node->data);
+
+    if (node->next != NULL)
+    {
+        printf(" -> %d", *(int *)node->next->data);
+    }
+    else
+    {
+        printf(" -> NULL");
+    }
+    printf("\n");
 }
 
 int main()
@@ -18,5 +37,6 @@ int main()
     insert(l, &n3, 1);
 
     print(l, &print_node);
+    delete (l);
     return 0;
 }
