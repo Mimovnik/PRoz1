@@ -15,7 +15,7 @@ Node *create_node(void *data)
     return newNode;
 }
 
-List *create_list()
+List *create_list(void (*f_print)(Node *))
 {
     List *list = (List *)malloc(sizeof(List));
     if (list == NULL)
@@ -25,6 +25,7 @@ List *create_list()
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
+    list->f_print = f_print;
     return list;
 }
 
@@ -59,7 +60,7 @@ int push(List *list, void *data)
     return 0;
 }
 
-void print(List *list, void (*f_print)(Node *))
+void print_list(List *list)
 {
     if (list == NULL)
     {
@@ -69,7 +70,7 @@ void print(List *list, void (*f_print)(Node *))
     Node *currentNode = list->head;
     while (currentNode != NULL)
     {
-        f_print(currentNode);
+        list->f_print(currentNode);
         currentNode = currentNode->next;
     }
 }

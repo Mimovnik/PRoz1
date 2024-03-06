@@ -27,7 +27,7 @@ void print_node(Node *node)
 
 int main()
 {
-    List *l = create_list();
+    List *l = create_list(&print_node);
     if (l == NULL)
     {
         printf("ERROR: Failed to create a list. Closing\n");
@@ -47,7 +47,7 @@ int main()
 
     printf("Initialization complete\n");
 
-    print(l, &print_node);
+    print_list(l);
     delete_list(l);
     return 0;
 }

@@ -10,7 +10,7 @@ typedef struct HashList
     List *list;
 } HashList;
 
-HashList *create_hash_list();
+HashList *create_hash_list(void *(*f_hash)(void *data), int (*f_comp)(void *hash1, void *hash2), void (*f_print)(Node *node));
 
 int insert(HashList *hashList, void *data);
 
