@@ -15,7 +15,7 @@ Node *create_node(void *data)
     return newNode;
 }
 
-List *create_list(void (*f_print)(Node *))
+List *create_list(void (*f_print)(void *))
 {
     List *list = (List *)malloc(sizeof(List));
     if (list == NULL)
@@ -60,17 +60,18 @@ int push(List *list, void *data)
     return 0;
 }
 
-void print_list(List *list)
+int print_list(List *list)
 {
     if (list == NULL)
     {
-        return;
+        printf("ERROR: print_list: Cannot print null\n");
+        return 1;
     }
 
     Node *currentNode = list->head;
     while (currentNode != NULL)
     {
-        list->f_print(currentNode);
+        list->f_print(currentNode->data);
         currentNode = currentNode->next;
     }
 }

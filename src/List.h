@@ -13,16 +13,16 @@ typedef struct List
     Node *head;
     Node *tail;
     int size;
-    void (*f_print)(struct Node *);
+    void (*f_print)(void *);
 } List;
 
 Node *create_node(void *data);
 
-List *create_list(void (*f_print)(Node *));
+List *create_list(void (*f_print)(void *));
 
 int push(List *list, void *data);
 
-void print_list(List *list);
+int print_list(List *list);
 
 void delete_list(List *list);
 
