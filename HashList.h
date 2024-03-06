@@ -12,10 +12,10 @@ typedef struct HashList
 
 HashList *create_hash_list();
 
-int insert(List *list, void *data, int index);
+int insert(HashList *hashList, void *data);
 
-void print(List *list, void (*f_print)(Node *));
+void print_hash_list(HashList *hashList, void (*f_print)(Node *));
 
-void delete_hash_list(HashList *list);
+void delete_hash_list(HashList *hashList);
 
 #endif

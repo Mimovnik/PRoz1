@@ -19,7 +19,7 @@ Node *create_node(void *data);
 
 List *create_list();
 
-int insert(List *list, void *data, int index);
+int push(List *list, void *data);
 
 void print(List *list, void (*f_print)(Node *));
 

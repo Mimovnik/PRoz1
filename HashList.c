@@ -1,12 +1,12 @@
 #include "HashList.h"
 #include <stdlib.h>
 
-typedef struct HashList
-{
-    List *list;
-    void *(*f_hash)();
-    int (*f_comp)();
-} HashList;
+// typedef struct HashList
+// {
+//     List *list;
+//     void *(*f_hash)();
+//     int (*f_comp)();
+// } HashList;
 
 HashList *create_hash_list(void *(*f_hash)(void *data), int (*f_comp)(void *hash1, void *hash2))
 {
@@ -22,15 +22,16 @@ HashList *create_hash_list(void *(*f_hash)(void *data), int (*f_comp)(void *hash
 
 int insert(HashList *hashList, void *data)
 {
-    void *dataHash = f_hash(data);
+    void *dataHash = hashList->f_hash(data);
+    return 1;
 }
 
-void print(HashList *hashList, void (*f_print)(Node *))
+void print_hash_list(HashList *hashList, void (*f_print)(Node *))
 {
 }
 
 void delete_hash_list(HashList *hashList)
 {
     delete_list(hashList->list);
-    delete (hashList);
+    free(hashList);
 }

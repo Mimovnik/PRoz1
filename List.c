@@ -4,8 +4,11 @@
 
 Node *create_node(void *data)
 {
-    printf("Creating a list\n");
     Node *newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL)
+    {
+        return NULL;
+    }
     newNode->data = data;
     newNode->previous = NULL;
     newNode->next = NULL;
@@ -15,69 +18,42 @@ Node *create_node(void *data)
 List *create_list()
 {
     List *list = (List *)malloc(sizeof(List));
+    if (list == NULL)
+    {
+        return NULL;
+    }
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
     return list;
 }
 
-int insert(List *list, void *data, int index)
+int push(List *list, void *data)
 {
     if (list == NULL)
     {
-        printf("ERROR: List can't be null\n");
-        return 1;
-    }
-    if (index < 0 || index > list->size)
-    {
-        printf("ERROR: Index is out of bound\n");
+        printf("ERROR: push: '*list' can't be null\n");
         return 1;
     }
 
     Node *newNode = create_node(data);
+    if (newNode == NULL)
+    {
+        printf("ERROR: Failed to create a node\n");
+        return 1;
+    }
 
     if (list->head == NULL)
     {
-        printf("Inserting the first element\n");
         list->head = newNode;
         list->tail = list->head;
         list->size++;
         return 0;
     }
 
-    if (index == 0)
-    {
-        printf("Inserting at the front\n");
-        list->head->previous = newNode;
-        newNode->next = list->head;
-        list->head = newNode;
-
-        list->size++;
-        return 0;
-    }
-
-    if (index == list->size)
-    {
-        printf("Inserting at the end\n");
-        list->tail->next = newNode;
-        newNode->previous = list->tail;
-        list->tail = newNode;
-
-        list->size++;
-        return 0;
-    }
-
-    Node *atIndex = list->head;
-    for (int i = 0; i < index; i++)
-    {
-        atIndex = atIndex->next;
-    }
-
-    printf("Inserting at index: %d\n", index);
-    atIndex->previous->next = newNode;
-    newNode->previous = atIndex->previous;
-    atIndex->previous = newNode;
-    newNode->next = atIndex;
+    list->tail->next = newNode;
+    newNode->previous = list->tail;
+    list->tail = newNode;
 
     list->size++;
     return 0;
@@ -85,6 +61,11 @@ int insert(List *list, void *data, int index)
 
 void print(List *list, void (*f_print)(Node *))
 {
+    if (list == NULL)
+    {
+        return;
+    }
+
     Node *currentNode = list->head;
     while (currentNode != NULL)
     {
@@ -95,6 +76,11 @@ void print(List *list, void (*f_print)(Node *))
 
 void delete_list(List *list)
 {
+    if (list == NULL)
+    {
+        return;
+    }
+
     Node *currentNode = list->head;
     if (currentNode == NULL)
     {

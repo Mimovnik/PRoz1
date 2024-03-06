@@ -28,14 +28,19 @@ void print_node(Node *node)
 int main()
 {
     List *l = create_list();
+    if (l == NULL)
+    {
+        printf("ERROR: Failed to create a list. Closing\n");
+        return 1;
+    }
     const int N_COUNT = 10;
     int ns[N_COUNT];
     for (int i = 0; i < N_COUNT; i++)
     {
         ns[i] = i;
-        if (insert(l, &ns[i], i) != 0)
+        if (push(l, &ns[i]) != 0)
         {
-            printf("ERROR: Insert failed. Closing\n");
+            printf("ERROR: Push failed. Closing\n");
             return 1;
         }
     }
@@ -43,6 +48,6 @@ int main()
     printf("Initialization complete\n");
 
     print(l, &print_node);
-    delete (l);
+    delete_list(l);
     return 0;
 }
