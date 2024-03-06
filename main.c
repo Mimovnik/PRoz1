@@ -28,13 +28,19 @@ void print_node(Node *node)
 int main()
 {
     List *l = create_list();
+    const int N_COUNT = 10;
+    int ns[N_COUNT];
+    for (int i = 0; i < N_COUNT; i++)
+    {
+        ns[i] = i;
+        if (insert(l, &ns[i], i) != 0)
+        {
+            printf("ERROR: Insert failed. Closing\n");
+            return 1;
+        }
+    }
 
-    int n1 = 1;
-    int n2 = 2;
-    int n3 = 3;
-    insert(l, &n1, 0);
-    insert(l, &n2, 1);
-    insert(l, &n3, 1);
+    printf("Initialization complete\n");
 
     print(l, &print_node);
     delete (l);
