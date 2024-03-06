@@ -4,6 +4,7 @@
 
 Node *create_node(void *data)
 {
+    printf("Creating a list\n");
     Node *newNode = (Node *)malloc(sizeof(Node));
     newNode->data = data;
     newNode->previous = NULL;
@@ -37,7 +38,7 @@ int insert(List *list, void *data, int index)
 
     if (list->head == NULL)
     {
-        printf("Inserting the first element.\n");
+        printf("Inserting the first element\n");
         list->head = newNode;
         list->tail = list->head;
         list->size++;
@@ -47,13 +48,12 @@ int insert(List *list, void *data, int index)
     Node *atIndex = list->head;
     for (int i = 0; i < index; i++)
     {
-        printf("atIndex is null (Probaly inserting at the end). i: %d", i);
         atIndex = atIndex->next;
     }
 
     if (index == 0)
     {
-        printf("Inserting at the front.\n");
+        printf("Inserting at the front\n");
         list->head = newNode;
         newNode->next = atIndex;
         atIndex->previous = newNode;
@@ -63,7 +63,7 @@ int insert(List *list, void *data, int index)
 
     if (index == list->size)
     {
-        printf("Inserting at the end.\n");
+        printf("Inserting at the end\n");
         list->tail->next = newNode;
         newNode->previous = list->tail;
         list->tail = newNode;
@@ -71,7 +71,7 @@ int insert(List *list, void *data, int index)
         return 0;
     }
 
-    printf("Inserting at index: %d.", index);
+    printf("Inserting at index: %d\n", index);
     atIndex->previous->next = newNode;
     newNode->previous = atIndex->previous->next;
     atIndex->previous = newNode;
