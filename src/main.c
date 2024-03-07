@@ -10,25 +10,26 @@ void f_print(void *value)
 void *f_hash(void *value)
 {
     unsigned char *str = (unsigned char *)value;
-    // djb2
     unsigned long *hash = (unsigned long *)malloc(sizeof(long));
     if (hash == NULL)
     {
         printf("ERROR: Failed to allocate hash\n");
         return NULL;
     }
-    *hash = 5381;
+    *hash = 0;
     int c;
     while (c = *str++)
     {
-        *hash = ((*hash << 5) + *hash) + c; /* hash * 33 + c */
+        *hash = c + (*hash << 6) + (*hash << 16) - *hash;
     }
+    // f_print(value);
+    // printf("hash: %lu\n", *hash);
     return hash;
 }
 
 int f_comp(void *key1, void *key2)
 {
-    unsigned long diff = *(unsigned long *)key1 - *(unsigned long *)key2;
+    long diff = *(unsigned long *)key1 - *(unsigned long *)key2;
     if (diff == 0)
     {
         return 0;
@@ -42,26 +43,39 @@ int f_comp(void *key1, void *key2)
 
 int main()
 {
-    char *str1 = "abc";
-    char *str2 = "banan";
-    char *str3 = "kebab";
-    char *str4 = "1234";
+    char *str1 = "kebab";
+    char *str2 = "abcde";
+    char *str3 = "12345";
+    char *str4 = "PRoz1";
+    char *str5 = "";
+    char *str6 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
     HashMap *hm = create_hash_map(&f_hash, &f_comp, &f_print);
-    insert(hm, str1);
-    insert(hm, str2);
-    insert(hm, str1);
-    insert(hm, str2);
 
     insert(hm, str1);
     insert(hm, str2);
     insert(hm, str3);
     insert(hm, str4);
+    insert(hm, str5);
+    insert(hm, str6);
+
+    insert(hm, str6);
+    insert(hm, str5);
+    insert(hm, str4);
+    insert(hm, str3);
+    insert(hm, str2);
+    insert(hm, str1);
+
+    insert(hm, str1);
+    insert(hm, str2);
+    insert(hm, str1);
+    insert(hm, str2);
 
     insert(hm, str3);
     insert(hm, str2);
     insert(hm, str1);
     insert(hm, str4);
+
     print_hash_map(hm);
 
     delete_hash_map(hm);
