@@ -4,7 +4,7 @@
 
 void f_print(void *value)
 {
-    printf("value: %s\n", (char *)value);
+    printf("%s\n", (char *)value);
 }
 
 void *f_hash(void *value)
@@ -47,39 +47,28 @@ int main()
     char *str2 = "abcde";
     char *str3 = "12345";
     char *str4 = "PRoz1";
-    char *str5 = "";
+    char *str5 = "yo";
     char *str6 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
     HashMap *hm = create_hash_map(&f_hash, &f_comp, &f_print);
 
     insert(hm, str1);
     insert(hm, str2);
+    insert(hm, str2);
     insert(hm, str3);
+    insert(hm, str4);
     insert(hm, str4);
     insert(hm, str5);
     insert(hm, str6);
-
     insert(hm, str6);
-    insert(hm, str5);
-    insert(hm, str4);
-    insert(hm, str3);
-    insert(hm, str2);
-    insert(hm, str1);
 
-    insert(hm, str1);
-    insert(hm, str2);
-    insert(hm, str1);
-    insert(hm, str2);
-
-    insert(hm, str3);
-    insert(hm, str2);
-    insert(hm, str1);
-    insert(hm, str4);
-
+    printf("Before remove:\n");
     print_hash_map(hm);
 
     unsigned long *htest = f_hash(str4);
-    char *strtest = get_value(hm, htest);
+    char *strtest = remove_value(hm, htest);
+    printf("After remove:\n");
+    print_hash_map(hm);
 
     delete_hash_map(hm);
     return 0;

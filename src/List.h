@@ -24,6 +24,8 @@ int push(List *list, void *data);
 
 int print_list(List *list);
 
+void *remove_head(List *list);
+
 void delete_list(List *list);
 
 #endif

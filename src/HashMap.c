@@ -60,7 +60,6 @@ int insert(HashMap *hashMap, void *value)
     // No entries
     if (hashMap->entries->head == NULL)
     {
-        printf("Inserting the first element\n");
         List *values = create_list(hashMap->f_print);
         push(values, value);
         HashEntry *newEntry = create_hash_entry(key, values);
@@ -146,6 +145,27 @@ void *get_value(HashMap *hashMap, void *key)
 
 void *remove_value(HashMap *hashMap, void *key)
 {
+    Node *currentNode = hashMap->entries->head;
+
+    for (int i = 0; i < hashMap->entries->size; i++)
+    {
+        HashEntry *currentEntry = currentNode->data;
+        if (hashMap->f_comp(key, currentEntry->key) == 0)
+        {
+            void *value = remove_head(currentEntry->values);
+
+            if (currentEntry->values->size == 0)
+            {
+                delete_hash_entry(currentEntry);
+            }
+
+            return value;
+        }
+        currentNode = currentNode->next;
+    }
+
+    HashEntry *currentEntry = currentNode->data;
+
     return NULL;
 }
 
@@ -165,7 +185,6 @@ int print_hash_map(HashMap *hashMap)
     Node *currentNode = hashMap->entries->head;
     for (int i = 0; i < hashMap->entries->size; i++)
     {
-        printf("Printing element #%d\n", i);
         HashEntry *entry = currentNode->data;
         print_list(entry->values);
         currentNode = currentNode->next;

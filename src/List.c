@@ -76,6 +76,42 @@ int print_list(List *list)
     }
 }
 
+void *remove_head(List *list)
+{
+    if (list == NULL)
+    {
+        printf("ERROR: remove_head: *list cannot be null\n");
+        return NULL;
+    }
+
+    if (list->size <= 0)
+    {
+        printf("ERROR: remove_head: Cannot remove from an empty list\n");
+        return NULL;
+    }
+
+    void *data = list->head->data;
+
+    if (list->size == 1)
+    {
+        free(list->head);
+        list->head = NULL;
+        list->tail = NULL;
+        list->size--;
+        return data;
+    }
+
+    Node *removed = list->head;
+    Node *newHead = list->head->next;
+
+    list->head = newHead;
+    newHead->previous = NULL;
+
+    list->size--;
+    free(removed);
+    return data;
+}
+
 void delete_list(List *list)
 {
     if (list == NULL)
