@@ -57,6 +57,7 @@ int insert(HashMap *hashMap, void *value)
 
     void *key = hashMap->f_hash(value);
 
+    // No entries
     if (hashMap->entries->head == NULL)
     {
         printf("Inserting the first element\n");
@@ -79,55 +80,50 @@ int insert(HashMap *hashMap, void *value)
         }
 
         HashEntry *currentEntry = currentNode->data;
-        if (hashMap->f_comp(key, currentEntry->key) < 0)
+        if (hashMap->f_comp(key, currentEntry->key) > 0)
         {
-            break;
+            currentNode = currentNode->next;
+            continue;
         }
-
-        currentNode = currentNode->next;
+        break;
     }
 
     HashEntry *currentEntry = currentNode->data;
-    if (hashMap->f_comp(key, currentEntry->key) == 0)
+    int order = hashMap->f_comp(key, currentEntry->key);
+    if (order == 0)
     {
         free(key);
         push(currentEntry->values, value);
         return 0;
     }
 
+    // Create a new node
     List *values = create_list(hashMap->f_print);
     push(values, value);
     HashEntry *newEntry = create_hash_entry(key, values);
     Node *newNode = create_node(newEntry);
 
-    hashMap->entries->size++;
-
-    if (currentNode == hashMap->entries->head)
+    if (currentNode->next == NULL && order > 0)
     {
-        // h
-        // CN
-        // 1 <-> 2
-        //
-        //         CN
-        // new <-> 1 <-> 2
-
-        newNode->next = currentNode;
-        currentNode->previous = newNode;
-
-        hashMap->entries->head = newNode;
-        return 0;
-    }
-
-    currentNode->previous->next = newNode;
-    newNode->previous = currentNode->previous;
-    currentNode->previous = newNode;
-    newNode->next = currentNode;
-
-    if (currentNode == hashMap->entries->tail && hashMap->f_comp(key, currentEntry->key) > 0)
-    {
+        currentNode->next = newNode;
+        newNode->previous = currentNode;
         hashMap->entries->tail = newNode;
     }
+    else if (currentNode->previous == NULL)
+    {
+        newNode->next = currentNode;
+        currentNode->previous = newNode;
+        hashMap->entries->head = newNode;
+    }
+    else
+    {
+        newNode->next = currentNode;
+        newNode->previous = currentNode->previous;
+        currentNode->previous->next = newNode;
+        currentNode->previous = newNode;
+    }
 
+    hashMap->entries->size++;
     return 0;
 }
 

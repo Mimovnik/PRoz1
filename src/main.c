@@ -42,20 +42,23 @@ int f_comp(void *key1, void *key2)
 
 int main()
 {
-    char *str1 = "kebab";
+    char *str1 = "abc";
     char *str2 = "banan";
-    char *str3 = "keke";
-    char *str4 = "abc";
+    char *str3 = "kebab";
+    char *str4 = "1234";
 
     HashMap *hm = create_hash_map(&f_hash, &f_comp, &f_print);
     insert(hm, str1);
     insert(hm, str2);
-    insert(hm, str3);
-    insert(hm, str4);
     insert(hm, str1);
     insert(hm, str2);
+
     insert(hm, str1);
-    insert(hm, str1);
+    insert(hm, str2);
+    insert(hm, str3);
+    insert(hm, str4);
+
+    insert(hm, str3);
     insert(hm, str2);
     insert(hm, str1);
     insert(hm, str4);
