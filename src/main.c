@@ -78,6 +78,9 @@ int main()
 
     print_hash_map(hm);
 
+    unsigned long *htest = f_hash(str4);
+    char *strtest = get_value(hm, htest);
+
     delete_hash_map(hm);
     return 0;
 }

@@ -15,6 +15,10 @@ HashMap *create_hash_map(void *(*f_hash)(void *value), int (*f_comp)(void *key1,
 
 int insert(HashMap *hashMap, void *value);
 
+void *get_value(HashMap *hashMap, void *key);
+
+void *remove_value(HashMap *hashMap, void *key);
+
 int print_hash_map(HashMap *hashMap);
 
 void delete_hash_map(HashMap *hashMap);

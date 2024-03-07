@@ -127,6 +127,28 @@ int insert(HashMap *hashMap, void *value)
     return 0;
 }
 
+void *get_value(HashMap *hashMap, void *key)
+{
+    Node *currentNode = hashMap->entries->head;
+
+    for (int i = 0; i < hashMap->entries->size; i++)
+    {
+        HashEntry *currentEntry = currentNode->data;
+        if (hashMap->f_comp(key, currentEntry->key) == 0)
+        {
+            return currentEntry->values->head->data;
+        }
+        currentNode = currentNode->next;
+    }
+
+    return NULL;
+}
+
+void *remove_value(HashMap *hashMap, void *key)
+{
+    return NULL;
+}
+
 int print_hash_map(HashMap *hashMap)
 {
     if (hashMap == NULL)
