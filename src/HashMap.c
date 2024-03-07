@@ -90,6 +90,7 @@ int insert(HashMap *hashMap, void *value)
     HashEntry *currentEntry = currentNode->data;
     if (hashMap->f_comp(key, currentEntry->key) == 0)
     {
+        free(key);
         push(currentEntry->values, value);
         return 0;
     }

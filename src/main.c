@@ -44,11 +44,21 @@ int main()
 {
     char *str1 = "kebab";
     char *str2 = "banan";
+    char *str3 = "keke";
+    char *str4 = "abc";
 
     HashMap *hm = create_hash_map(&f_hash, &f_comp, &f_print);
     insert(hm, str1);
+    insert(hm, str2);
+    insert(hm, str3);
+    insert(hm, str4);
     insert(hm, str1);
     insert(hm, str2);
+    insert(hm, str1);
+    insert(hm, str1);
+    insert(hm, str2);
+    insert(hm, str1);
+    insert(hm, str4);
     print_hash_map(hm);
 
     delete_hash_map(hm);
