@@ -21,7 +21,7 @@ HashEntry *create_hash_entry(void *key, List *values)
     hashEntry->values = values;
 }
 
-void delete_hash_node(HashEntry *hashEntry)
+void delete_hash_entry(HashEntry *hashEntry)
 {
     free(hashEntry->key);
     delete_list(hashEntry->values);
@@ -90,7 +90,6 @@ int insert(HashMap *hashMap, void *value)
     HashEntry *currentEntry = currentNode->data;
     if (hashMap->f_comp(key, currentEntry->key) == 0)
     {
-        printf("Inserting to the existing entry");
         push(currentEntry->values, value);
         return 0;
     }
@@ -99,7 +98,6 @@ int insert(HashMap *hashMap, void *value)
     push(values, value);
     HashEntry *newEntry = create_hash_entry(key, values);
     Node *newNode = create_node(newEntry);
-    printf("Inserting to the new entry");
 
     hashMap->entries->size++;
 
@@ -157,26 +155,56 @@ int print_hash_map(HashMap *hashMap)
 
 void delete_hash_map(HashMap *hashMap)
 {
+    // hashMap
+    // |
+    //  ---entries
+    //     |
+    //      ---Node1
+    //     |   |
+    //     |   ---HashEntry
+    //     |      |
+    //     |       ---key
+    //     |      |
+    //     |       ---values (can delete it-self)
+    //     |          |
+    //     |           ---Node1
+    //      ---Node2  |   |
+    //     |   ...    |    --- data
+    //     .          |
+    //     |           ---Node2
+    //      ---Node3  |   ...
+    //         ...    .
+    //                |
+    //                 ---Node3
+    //                    ...
+
     if (hashMap == NULL)
     {
         return;
     }
 
-    if (hashMap->entries != NULL)
+    if (hashMap->entries == NULL)
     {
-        Node *currentNode = hashMap->entries->head;
-        if (currentNode == NULL)
-        {
-            return;
-        }
-        while (currentNode->next != NULL)
-        {
-            currentNode = currentNode->next;
-            delete_hash_node(currentNode->previous->data);
-            free(currentNode->previous);
-        }
-        free(currentNode);
-        free(hashMap->entries);
+        free(hashMap);
+        return;
     }
+
+    Node *currentNode = hashMap->entries->head;
+    if (currentNode == NULL)
+    {
+        delete_list(hashMap->entries);
+        free(hashMap);
+        return;
+    }
+
+    while (currentNode->next != NULL)
+    {
+        currentNode = currentNode->next;
+        delete_hash_entry(currentNode->previous->data);
+        free(currentNode->previous);
+    }
+    delete_hash_entry(currentNode->data);
+    free(currentNode);
+    free(hashMap->entries);
     free(hashMap);
 }
