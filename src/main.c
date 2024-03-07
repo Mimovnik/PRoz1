@@ -67,6 +67,7 @@ int main()
 
     unsigned long *htest = f_hash(str4);
     char *strtest = remove_value(hm, htest);
+    free(htest);
     printf("After remove:\n");
     print_hash_map(hm);
 
