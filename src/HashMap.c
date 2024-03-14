@@ -160,12 +160,13 @@ void *remove_value(HashMap *hashMap, void *key)
             {
                 delete_hash_entry(currentEntry);
             }
-
+            free(key);
             return value;
         }
         currentNode = currentNode->next;
     }
 
+    free(key);
     return NULL;
 }
 
