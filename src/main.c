@@ -52,15 +52,50 @@ int main()
 
     HashMap *hm = create_hash_map(&f_hash, &f_comp, &f_print);
 
-    insert(hm, str1);
-    insert(hm, str2);
-    insert(hm, str2);
-    insert(hm, str3);
+    int success = insert(hm, str1);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
+    success = insert(hm, str2);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
+    success = insert(hm, str2);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
+    success = insert(hm, str3);
     insert(hm, str4);
-    insert(hm, str4);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
+    success = insert(hm, str4);
     insert(hm, str5);
-    insert(hm, str6);
-    insert(hm, str6);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
+    success = insert(hm, str6);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
+    success = insert(hm, str6);
+    if (success != 0)
+    {
+        delete_hash_map(hm);
+        return 1;
+    }
 
     printf("Before remove:\n");
     print_hash_map(hm);
