@@ -18,7 +18,7 @@ void *f_hash(void *value)
     }
     *hash = 0;
     int c;
-    while (c = *str++)
+    while ((c = *str++))
     {
         *hash = c + (*hash << 6) + (*hash << 16) - *hash;
     }
@@ -101,7 +101,7 @@ int main()
     print_hash_map(hm);
 
     unsigned long *htest = f_hash(str4);
-    char *strtest = remove_value(hm, htest);
+    remove_value(hm, htest);
     printf("After remove:\n");
     print_hash_map(hm);
 
