@@ -19,6 +19,7 @@ HashEntry *create_hash_entry(void *key, List *values)
 
     hashEntry->key = key;
     hashEntry->values = values;
+    return hashEntry;
 }
 
 void delete_hash_entry(HashEntry *hashEntry)
@@ -39,6 +40,7 @@ HashMap *create_hash_map(void *(*f_hash)(void *value), int (*f_comp)(void *key1,
     newHashMap->f_hash = f_hash;
     newHashMap->f_comp = f_comp;
     newHashMap->f_print = f_print;
+    return newHashMap;
 }
 
 int insert(HashMap *hashMap, void *value)
@@ -164,8 +166,6 @@ void *remove_value(HashMap *hashMap, void *key)
         currentNode = currentNode->next;
     }
 
-    HashEntry *currentEntry = currentNode->data;
-
     return NULL;
 }
 
@@ -189,6 +189,7 @@ int print_hash_map(HashMap *hashMap)
         print_list(entry->values);
         currentNode = currentNode->next;
     }
+    return 0;
 }
 
 void delete_hash_map(HashMap *hashMap)

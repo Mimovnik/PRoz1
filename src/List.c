@@ -74,6 +74,7 @@ int print_list(List *list)
         list->f_print(currentNode->data);
         currentNode = currentNode->next;
     }
+    return 0;
 }
 
 void *remove_head(List *list)
